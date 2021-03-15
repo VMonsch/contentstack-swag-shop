@@ -50,10 +50,9 @@ const Footer = () => (
             </List>
           </Grid.Column>
           <Grid.Column width={7}>
-            <Header as="h4">Footer Header</Header>
+            <Header as="h4">Contact</Header>
             <p>
-              Extra space for a call to action inside the footer that could help
-              re-engage users.
+              For partners and events, reach out via the appropriate channel below.
             </p>
             <List horizontal style={{display: 'flex'}}>
               <List.Item

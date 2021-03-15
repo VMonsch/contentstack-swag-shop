@@ -4,7 +4,7 @@ import get from 'lodash/get'
 import {Image, Header} from 'semantic-ui-react'
 import ProductList from '../components/ProductList'
 import SEO from '../components/SEO'
-import logo from '../images/ill-short-dark.svg'
+import banner from '../images/contentstack-swag-banner.png'
 import Layout from '../components/Layout'
 
 const StoreIndex = ({location}) => {
@@ -64,7 +64,7 @@ const StoreIndex = ({location}) => {
             margin: '0 auto',
           }}
         >
-          <Image src={logo} alt="logo" />
+          <Image src={banner} alt="Contentstack Swag" />
         </Header.Content>
       </Header>
       <ProductList products={filterProductsWithoutImages} />

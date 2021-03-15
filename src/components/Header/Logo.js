@@ -1,12 +1,12 @@
 import React from 'react'
 import {Image} from 'semantic-ui-react'
 
-import moltin from '../../images/moltin-light-hex.svg.svg'
+import contentstackLogo from '../../images/contentstack-logo.png'
 
 const Logo = () => (
   <Image
     size="mini"
-    src={moltin}
+    src={contentstackLogo}
     style={{marginRight: '1.5em'}}
     alt="I love Lamp"
   />

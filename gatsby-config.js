@@ -4,9 +4,9 @@ require('dotenv').config({
 
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby starter ecommerce',
-    author: 'Parminder Sanghera',
-    description: 'A starter e-commerce site made using Gatsby.',
+    title: 'Contentstack Swag Shop',
+    author: 'Victor Monsch',
+    description: 'Based off of Gatsby\'s ecommerce starter.',
     siteUrl: 'https://parmsang.github.io/gatsby-starter-ecommerce/',
   },
   pathPrefix: '/gatsby-starter-ecommerce',
@@ -54,15 +54,15 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'Gatsby Shop App',
-        short_name: 'Shop App',
+        name: 'Contentstack Swag Shop',
+        short_name: 'Contentstack Swag',
         start_url: '/gatsby-starter-ecommerce/',
         background_color: '#ffffff',
         theme_color: '#ffffff',
         display: 'minimal-ui',
         icons: [
           {
-            src: `/favicons/android-chrome-512x512.png`,
+            src: `/favicons/contentstack-logo.png`,
             sizes: `512x512`,
             type: `image/png`,
           },
