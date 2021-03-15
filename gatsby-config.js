@@ -12,14 +12,6 @@ module.exports = {
   pathPrefix: '/gatsby-starter-ecommerce',
   plugins: [
     {
-      resolve: '@moltin/gatsby-source-moltin',
-      options: {
-        client_id:
-          process.env.MOLTIN_CLIENT_ID ||
-          'EdP3Gi1agyUF3yFS7Ngm8iyodLgbSR3wY4ceoJl0d2',
-      },
-    },
-    {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages`,
@@ -71,5 +63,17 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: 'gatsby-source-contentstack',
+      options: {
+        api_key: process.env.CONTENTSTACK_API_KEY,
+        delivery_token: process.env.CONTENTSTACK_DELIVERY_TOKEN,
+        environment: process.env.CONTENTSTACK_ENVIRONMENT,
+        cdn: process.env.CONTENTSTACK_CDN ? process.env.CONTENTSTACK_CDN : '',
+        expediteBuild: true,
+        enableSchemaGeneration: true,
+        type_prefix: 'Contentstack', // default
+      },
+    },
   ],
 }

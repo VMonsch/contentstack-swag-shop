@@ -9,7 +9,7 @@ import Layout from '../components/Layout'
 
 class ProductPageTemplate extends React.PureComponent {
   render() {
-    const productInfo = get(this, 'props.data.allMoltinProduct')
+    const productInfo = get(this, 'props.data.allContentstackProduct')
     const data = productInfo.edges[0].node
     const slug = data.slug
     const image = get(data, 'mainImageHref')
@@ -40,36 +40,22 @@ export default ProductPageTemplate
 
 export const pageQuery = graphql`
   query ProductsQuery($id: String!) {
-    allMoltinProduct(filter: {id: {eq: $id}}) {
+    allContentstackProduct(filter: {id: {eq: $id}}) {
       edges {
         node {
           id
-          name
-          description
-          meta {
-            display_price {
-              with_tax {
-                amount
-                currency
-                formatted
-              }
-            }
+          title
+          seo {
+            title
+            description
           }
-          mainImageHref
-          mainImage {
-            childImageSharp {
-              sizes(maxWidth: 400) {
-                ...GatsbyImageSharpSizes
-              }
-            }
+          image {
+            url
           }
-          slug
+          url
+          type
           material
-          max_watt
-          bulb_qty
-          bulb
-          sku
-          finish
+          price
         }
       }
     }

@@ -15,29 +15,14 @@ const StoreIndex = ({location}) => {
           title
         }
       }
-      allMoltinProduct {
-        edges {
-          node {
-            id
-            name
-            description
-            mainImageHref
-            meta {
-              display_price {
-                with_tax {
-                  amount
-                  currency
-                  formatted
-                }
-              }
-            }
-            mainImage {
-              childImageSharp {
-                sizes(maxWidth: 600) {
-                  ...GatsbyImageSharpSizes
-                }
-              }
-            }
+      allContentstackProduct {
+        nodes {
+          id
+          title
+          url
+          price
+          image {
+            url
           }
         }
       }
@@ -45,8 +30,8 @@ const StoreIndex = ({location}) => {
   `)
 
   const siteTitle = get(data, 'site.siteMetadata.title')
-  const products = get(data, 'allMoltinProduct.edges')
-  const filterProductsWithoutImages = products.filter(v => v.node.mainImageHref)
+  const products = get(data, 'allContentstackProduct.nodes')
+  const filterProductsWithoutImages = products.filter(p => p.image)
   return (
     <Layout location={location}>
       <SEO title={siteTitle} />
