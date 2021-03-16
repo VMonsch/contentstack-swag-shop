@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Link, withPrefix} from 'gatsby'
+import {graphql, useStaticQuery, Link, withPrefix} from 'gatsby'
 import {
   Menu,
   Container,
@@ -79,6 +79,20 @@ const MobileMenu = ({location: {pathname}, token, cartCount, signout}) => {
 
   const handleClose = () => setOpen(false)
 
+  const data = useStaticQuery(graphql`
+    query MobileHeaderQuery {
+      contentstackHeader {
+        title
+        links {
+          href
+          title
+        }
+      }
+    }
+  `)
+
+  const header = data.contentstackHeader
+
   return (
     <Menu size="huge" borderless pointing>
       <Container text>
@@ -89,16 +103,9 @@ const MobileMenu = ({location: {pathname}, token, cartCount, signout}) => {
           active={activeItem === withPrefix('/')}
         >
           <Logo />
-          Store
+          {header.title}
         </Menu.Item>
         <Menu.Menu position="right">
-          <Menu.Item
-            as={Link}
-            to="/cart/"
-            active={activeItem === withPrefix('/cart/')}
-          >
-            <ShoppingCartIcon cartCount={cartCount} name="" />
-          </Menu.Item>
           <Menu.Item position="right">
             <BurgerButton
               basic
@@ -130,25 +137,13 @@ const MobileMenu = ({location: {pathname}, token, cartCount, signout}) => {
                 {`Shopping Cart ${cartCount ? `(${cartCount})` : ''}`}
               </StyledLink>
               <StyledDivider />
-              {token
-                ? [
-                    <StyledLink to="/myaccount/" onClick={handleClose} key={1}>
-                      My Account
-                    </StyledLink>,
-                    <StyledDivider key={2} />,
-                    <StyledLink to="/" onClick={signout} key={3}>
-                      Sign out
-                    </StyledLink>,
-                  ]
-                : [
-                    <StyledLink to="/register/" onClick={handleClose} key={1}>
-                      Sign Up
-                    </StyledLink>,
-                    <StyledDivider key={2} />,
-                    <StyledLink to="/login/" onClick={handleClose} key={3}>
-                      Sign In
-                    </StyledLink>,
-                  ]}
+              {header.links.map((link, i) => {
+                return (
+                  <StyledLink to={link.href} onClick={handleClose} key={i}>
+                    {link.title}
+                  </StyledLink>
+                )
+              })}
             </StyledContainer>
           </StyledSegment>
         </Portal>

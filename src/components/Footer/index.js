@@ -28,7 +28,6 @@ const Footer = () => {
   const data = useStaticQuery(graphql`
     query FooterQuery {
       contentstackFooter {
-        id
         sections {
           title
           text
@@ -60,12 +59,12 @@ const Footer = () => {
           <Grid.Row>
             {footer.sections.map((section, i) => {
               return (
-                <Grid.Column width={5}>
+                <Grid.Column key={i} width={5}>
                   <Header as="h4" content={section.title} />
                   <List>
-                    {section.link_list.map((link_el, i) => {
+                    {section.link_list.map((link_el, j) => {
                       return (
-                        <List.Item as={Link} to={link_el.link.href} icon={link_el.icon}>
+                        <List.Item key={j} as={Link} to={link_el.link.href}>
                           {link_el.link.title}
                         </List.Item>
                       )
