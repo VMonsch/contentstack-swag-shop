@@ -5,8 +5,6 @@ import OrderItemList from '../components/OrderItemList'
 import Layout from '../components/Layout'
 import AuthContext from '../components/Context/AuthContext'
 
-import {getOrders} from '../../lib/moltin'
-
 const MyAccount = ({location}) => {
   const [loading, setLoading] = useState(true)
   const [orders, setOrders] = useState([])

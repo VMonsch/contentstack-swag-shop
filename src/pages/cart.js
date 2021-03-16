@@ -6,8 +6,6 @@ import CartSummary from '../components/CartSummary'
 import CartContext from '../components/Context/CartContext'
 import Layout from '../components/Layout'
 
-const Moltin = require('../../lib/moltin')
-
 const Cart = ({location}) => {
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState([])
@@ -18,12 +16,13 @@ const Cart = ({location}) => {
 
   async function getCartItems() {
     const cartIdLocal = await localStorage.getItem('mcart')
-    await Moltin.getCartItems(cartIdLocal).then(({data, meta}) => {
+    /*await oldLib.getCartItems(cartIdLocal).then(({data, meta}) => {
       setItems(data)
       setCartId(cartIdLocal)
       setMeta(meta)
       setLoading(false)
-    })
+    })*/
+    console.log('TODO')
   }
 
   useEffect(() => {
@@ -60,10 +59,11 @@ const Cart = ({location}) => {
     }
 
     try {
-      const {
+      /*const {
         data: {id},
-      } = await Moltin.checkoutCart(cartId, customer, address)
-      await Moltin.payForOrder(id, token, email)
+      } = await oldLib.checkoutCart(cartId, customer, address)
+      await oldLib.payForOrder(id, token, email)*/
+      console.log('TODO')
       setCompleted(true)
       updateCartCount(0, cartId)
     } catch (e) {
@@ -72,12 +72,13 @@ const Cart = ({location}) => {
   }
 
   const handleRemoveFromCart = itemId => {
-    Moltin.removeFromCart(itemId, cartId).then(({data, meta}) => {
+    /*oldLib.removeFromCart(itemId, cartId).then(({data, meta}) => {
       const total = data.reduce((a, c) => a + c.quantity, 0)
       updateCartCount(total, cartId)
       setItems(data)
       setMeta(meta)
-    })
+    })*/
+    console.log('TODO')
   }
 
   const rest = {completed, items, loading, cartId}

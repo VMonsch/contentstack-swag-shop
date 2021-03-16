@@ -22,7 +22,6 @@ const CartProvider = ({children}) => {
   useEffect(() => {
     const cartId = localStorage.getItem('mcart')
 
-    // Note: Instead of localStorage you can use moltin api & Moltin.getCartItems(cartId) instead
     const mdata = localStorage.getItem('mdata')
 
     if ((cartId && !mdata) || !cartId) {

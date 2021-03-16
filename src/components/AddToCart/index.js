@@ -2,8 +2,6 @@ import React, {useState, useContext} from 'react'
 import {Input, Icon, Transition} from 'semantic-ui-react'
 import CartContext from '../Context/CartContext'
 
-const Moltin = require('../../../lib/moltin')
-
 const AddToCart = ({productId}) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -34,7 +32,7 @@ const AddToCart = ({productId}) => {
     setError(error)
     if (!error) {
       setLoading(true)
-      Moltin.addToCart(cartId, productId, quantity)
+      /*oldLib.addToCart(cartId, productId, quantity)
         .then(() => {
           addToCart(quantity, cartId)
           setLoading(false)
@@ -45,7 +43,7 @@ const AddToCart = ({productId}) => {
         .catch(err => {
           setError(`Error: ${err.errors[0].detail}` || 'Something went wrong')
           setLoading(false)
-        })
+        })*/
     }
   }
 
