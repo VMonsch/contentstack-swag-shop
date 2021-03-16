@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'gatsby'
+import {graphql, useStaticQuery, Link} from 'gatsby'
 import {Segment, Container, Grid, List, Header} from 'semantic-ui-react'
 
 const twitterLink = (
@@ -8,74 +8,77 @@ const twitterLink = (
   </a>
 )
 const facebookLink = (
-  <a href="https://www.facebook.com/contentstack/" alt="Contentstack's Facebook Link">
+  <a
+    href="https://www.facebook.com/contentstack/"
+    alt="Contentstack's Facebook Link"
+  >
     Facebook
   </a>
 )
 const emailLink = (
-  <a href="https://www.contentstack.com/company/contact-us/" alt="Contentstack's Contact Link">
+  <a
+    href="https://www.contentstack.com/company/contact-us/"
+    alt="Contentstack's Contact Link"
+  >
     Email
   </a>
 )
 
-const Footer = () => (
-  <Segment
-    vertical
-    style={{
-      padding: '4em 0em',
-      marginTop: '3em',
-      borderTop: '1px solid #f2f2f2',
-    }}
-  >
-    <Container text>
-      <Grid stackable>
-        <Grid.Row>
-          <Grid.Column width={4}>
-            <Header as="h4" content="About" />
-            <List>
-              <List.Item as={Link} to="/privacy/">
-                Privacy
-              </List.Item>
-              <List.Item as={Link} to="/terms/">
-                Terms
-              </List.Item>
-            </List>
-          </Grid.Column>
-          <Grid.Column width={5}>
-            <Header as="h4" content="Services" />
-            <List>
-              <List.Item as={Link} to="/">
-                Our Products
-              </List.Item>
-            </List>
-          </Grid.Column>
-          <Grid.Column width={7}>
-            <Header as="h4">Contact</Header>
-            <p>
-              For partners and events, reach out via the appropriate channel below.
-            </p>
-            <List horizontal style={{display: 'flex'}}>
-              <List.Item
-                icon="twitter"
-                style={{display: 'flex'}}
-                content={twitterLink}
-              />
-              <List.Item
-                icon="facebook"
-                style={{display: 'flex'}}
-                content={facebookLink}
-              />
-              <List.Item
-                icon="mail"
-                style={{display: 'flex'}}
-                content={emailLink}
-              />
-            </List>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Container>
-  </Segment>
-)
+const Footer = () => {
+  const data = useStaticQuery(graphql`
+    query FooterQuery {
+      contentstackFooter {
+        id
+        sections {
+          title
+          text
+          link_list {
+            icon
+            link {
+              href
+              title
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  const footer = data.contentstackFooter
+
+  return (
+    <Segment
+      vertical
+      style={{
+        padding: '4em 0em',
+        marginTop: '3em',
+        borderTop: '1px solid #f2f2f2',
+      }}
+    >
+      <Container text>
+        <Grid stackable>
+          <Grid.Row>
+            {footer.sections.map((section, i) => {
+              return (
+                <Grid.Column width={5}>
+                  <Header as="h4" content={section.title} />
+                  <List>
+                    {section.link_list.map((link_el, i) => {
+                      return (
+                        <List.Item as={Link} to={link_el.link.href} icon={link_el.icon}>
+                          {link_el.link.title}
+                        </List.Item>
+                      )
+                    })}
+                  </List>
+                </Grid.Column>
+              )
+            })}
+          </Grid.Row>
+        </Grid>
+      </Container>
+    </Segment>
+  )
+}
 
 export default Footer
