@@ -32,18 +32,10 @@ const AddToCart = ({productId}) => {
     setError(error)
     if (!error) {
       setLoading(true)
-      /*oldLib.addToCart(cartId, productId, quantity)
-        .then(() => {
-          addToCart(quantity, cartId)
-          setLoading(false)
-          setQuantity(quantity)
-          setVisible(true)
-          toggleMessage()
-        })
-        .catch(err => {
-          setError(`Error: ${err.errors[0].detail}` || 'Something went wrong')
-          setLoading(false)
-        })*/
+      addToCart(productId, quantity)
+      setLoading(false)
+      setVisible(true)
+      toggleMessage()
     }
   }
 

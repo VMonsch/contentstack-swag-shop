@@ -12,7 +12,6 @@ const Cart = ({location}) => {
   const [completed, setCompleted] = useState(false)
   const [meta, setMeta] = useState({})
   const [cartId, setCartId] = useState({})
-  const {updateCartCount} = useContext(CartContext)
 
   async function getCartItems() {
     const cartIdLocal = await localStorage.getItem('mcart')
@@ -65,7 +64,6 @@ const Cart = ({location}) => {
       await oldLib.payForOrder(id, token, email)*/
       console.log('TODO')
       setCompleted(true)
-      updateCartCount(0, cartId)
     } catch (e) {
       console.log(e)
     }
