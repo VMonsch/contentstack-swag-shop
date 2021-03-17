@@ -58,7 +58,7 @@ const StoreIndex = ({location}) => {
 
   function createProductList(title, idx) {
     return (
-      <div style={{
+      <div key={idx} style={{
         margin: '2em',
       }}>
         <Header
@@ -84,7 +84,7 @@ const StoreIndex = ({location}) => {
   }
 
   function createBanner(url, idx) {
-    return <img src={url} alt="Banner" style={{
+    return <img src={url} alt="Banner" key={idx} style={{
       width: '100%',
       margin: '1em auto',
     }}/>
