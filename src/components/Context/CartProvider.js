@@ -3,17 +3,20 @@ import CartContext from './CartContext'
 
 const CartProvider = ({children}) => {
   const [cart, setCart] = useState(null)
+  const [cartCount, setCartCount] = useState(0)
+
+  if(!cart) {
+    if(!localStorage.getItem('cart')) {
+      setCart({items:[]})
+    }
+    else {
+      setCart(JSON.parse(localStorage.getItem('cart')))
+    }
+  }
 
   const addToCart = (productId, quantity) => {
-    let cart =  JSON.parse(localStorage.getItem('cart'))
-
-    if(!cart) {
-      cart = {items:[]}
-    }
-
-    console.log(cart)
-
     const existingProduct = cart.items.find(item => item.id === productId)
+    quantity = Number(quantity)
 
     if (existingProduct) {
       existingProduct.quantity += quantity;
@@ -26,6 +29,9 @@ const CartProvider = ({children}) => {
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
+
+    setCartCount(cartCount + quantity)
+    console.log(cartCount)
   }
 
   return (

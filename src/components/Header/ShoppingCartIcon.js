@@ -20,7 +20,7 @@ const ShoppingCartIcon = ({cartCount, name}) => {
     <div>
       <Icon name="cart" />
       {` ${name} `}
-      {showCartCount()}
+      {/*showCartCount()*/}
     </div>
   )
 }

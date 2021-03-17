@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import {Responsive} from 'semantic-ui-react'
 import DesktopMenu from './DesktopMenu'
 import MobileMenu from './MobileMenu'
