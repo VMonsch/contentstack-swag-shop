@@ -2,36 +2,39 @@ import React, {useState, useEffect} from 'react'
 import CartContext from './CartContext'
 
 const CartProvider = ({children}) => {
-  const [cart, setCart] = useState(null)
+  const [cart, setCart] = useState({items: []})
   const [cartCount, setCartCount] = useState(0)
 
-  if(!cart) {
-    if(!localStorage.getItem('cart')) {
-      setCart({items:[]})
-    }
-    else {
+  useEffect(() => {
+    if (localStorage.getItem('cart')) {
       setCart(JSON.parse(localStorage.getItem('cart')))
     }
-  }
+  }, [])
 
-  const addToCart = (productId, quantity) => {
-    const existingProduct = cart.items.find(item => item.id === productId)
+  const addToCart = (product, quantity) => {
+    const existingProduct = cart.items.find(item => item.id === product.id)
     quantity = Number(quantity)
 
     if (existingProduct) {
-      existingProduct.quantity += quantity;
-    }
-    else {
+      existingProduct.quantity += quantity
+    } else {
       cart.items.push({
-        id: productId,
-        quantity
+        id: product.id,
+        quantity,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        url: product.url,
       })
     }
 
-    localStorage.setItem('cart', JSON.stringify(cart));
+    saveCart()
 
     setCartCount(cartCount + quantity)
-    console.log(cartCount)
+  }
+
+  const saveCart = () => {
+    localStorage.setItem('cart', JSON.stringify(cart))
   }
 
   return (

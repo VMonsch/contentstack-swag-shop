@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import {Link} from 'gatsby'
+import {Link, useStaticQuery} from 'gatsby'
 import {Item, Button, Loader, Message, Responsive} from 'semantic-ui-react'
 
 export default ({items, removeFromCart, loading, completed}) => {
@@ -9,12 +9,12 @@ export default ({items, removeFromCart, loading, completed}) => {
   if (completed)
     return (
       <Message success>
-        <Message.Header>Your placed!</Message.Header>
+        <Message.Header>Than you!</Message.Header>
         <p>Congratulations. Your order and payment has been accepted.</p>
       </Message>
     )
 
-  if (items.length === 0)
+  if (!items || items.length === 0)
     return (
       <Message warning>
         <Message.Header>Your cart is empty</Message.Header>
@@ -24,14 +24,13 @@ export default ({items, removeFromCart, loading, completed}) => {
       </Message>
     )
   const mapCartItemsToItems = items =>
-    items.map(({id, product_id, name, quantity, meta, image}) => {
-      const price = meta.display_price.with_tax.unit.formatted || ''
-      const imageUrl = image.href || '/static/logo.svg'
+    items.map(({id, url, title, quantity, image, price}) => {
+      const imageUrl = image.url || '/images/contentstack-logo.png'
 
       const DesktopItemImage = () => (
         <Item.Image
           src={imageUrl}
-          alt={name}
+          alt={title}
           size="small"
           style={{background: '#f2f2f2'}}
         />
@@ -39,7 +38,7 @@ export default ({items, removeFromCart, loading, completed}) => {
       const MobileItemImage = () => (
         <Item.Image
           src={imageUrl}
-          alt={name}
+          alt={title}
           size="small"
           style={{background: 'none'}}
         />
@@ -49,7 +48,7 @@ export default ({items, removeFromCart, loading, completed}) => {
         childKey: id,
         header: (
           <Item.Header>
-            <Link to={`/product/${product_id}/`}>{name}</Link>
+            <Link to={`/product${url}`}>{title}</Link>
           </Item.Header>
         ),
         image: (
@@ -61,8 +60,8 @@ export default ({items, removeFromCart, loading, completed}) => {
             />
           </React.Fragment>
         ),
-        meta: `${quantity}x ${price}`,
-        description: 'Some more information goes here....',
+        meta: `${quantity}x ${price} €`,
+        description: 'Awesome choice!',
         extra: (
           <Button
             basic

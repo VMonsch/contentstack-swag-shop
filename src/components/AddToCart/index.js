@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react'
 import {Input, Icon, Transition} from 'semantic-ui-react'
 import CartContext from '../Context/CartContext'
 
-const AddToCart = ({productId}) => {
+const AddToCart = ({product}) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [quantity, setQuantity] = useState(1)
@@ -26,13 +26,11 @@ const AddToCart = ({productId}) => {
   }
 
   const handleSubmit = async () => {
-    const cartId = await localStorage.getItem('mcart')
-
     const error = validate(quantity)
     setError(error)
     if (!error) {
       setLoading(true)
-      addToCart(productId, quantity)
+      addToCart(product, quantity)
       setLoading(false)
       setVisible(true)
       toggleMessage()

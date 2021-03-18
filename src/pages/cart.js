@@ -10,18 +10,12 @@ const Cart = ({location}) => {
   const [loading, setLoading] = useState(true)
   const [items, setItems] = useState([])
   const [completed, setCompleted] = useState(false)
-  const [meta, setMeta] = useState({})
-  const [cartId, setCartId] = useState({})
+  const {cart, setCart} = useContext(CartContext)
 
-  async function getCartItems() {
-    const cartIdLocal = await localStorage.getItem('mcart')
-    /*await oldLib.getCartItems(cartIdLocal).then(({data, meta}) => {
-      setItems(data)
-      setCartId(cartIdLocal)
-      setMeta(meta)
-      setLoading(false)
-    })*/
-    console.log('TODO')
+  function getCartItems() {
+    setLoading(true)
+    setItems(cart.items)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -29,57 +23,51 @@ const Cart = ({location}) => {
   }, [])
 
   const handleCheckout = async data => {
-    const cartId = await localStorage.getItem('mcart')
-    const customerId = localStorage.getItem('mcustomer')
-
-    const {
-      id: token,
-      email,
-      card: {
-        name,
-        address_line1: line_1,
-        address_city: city,
-        address_country: country,
-        address_state: county,
-        address_zip: postcode,
-      },
-    } = data
-
-    const customer = customerId || {name, email}
-
-    const address = {
-      first_name: name.split(' ')[0],
-      last_name: name.split(' ')[1] || '',
-      line_1,
-      city,
-      county: county || '',
-      country,
-      postcode,
-    }
-
     try {
-      /*const {
-        data: {id},
-      } = await oldLib.checkoutCart(cartId, customer, address)
-      await oldLib.payForOrder(id, token, email)*/
-      console.log('TODO')
       setCompleted(true)
+      fetch(
+        'https://eu-api.contentstack.com/v3/content_types/order/entries?locale=en-us',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            api_key: process.env.CONTENTSTACK_API_KEY || '',
+            authorization: process.env.CONTENTSTACK_MANAGEMENT_TOKEN || '',
+          },
+          body: JSON.stringify({
+            entry: {
+              title: 'New order',
+              buyer: data.card.name + ' (' + data.email + ')',
+              address:
+                data.address_line1 +
+                ', ' +
+                data.address_city +
+                ', ' +
+                data.address_zip +
+                ', ' +
+                data.address_country,
+            },
+          }),
+        },
+      )
     } catch (e) {
       console.log(e)
     }
   }
 
   const handleRemoveFromCart = itemId => {
-    /*oldLib.removeFromCart(itemId, cartId).then(({data, meta}) => {
-      const total = data.reduce((a, c) => a + c.quantity, 0)
-      updateCartCount(total, cartId)
-      setItems(data)
-      setMeta(meta)
-    })*/
-    console.log('TODO')
+    setCart(
+      cart.items.filter(item => {
+        return item.id !== itemId
+      }),
+    )
   }
 
-  const rest = {completed, items, loading, cartId}
+  const rest = {completed, items, loading}
+  let amount = 0
+  items.forEach(item => {
+    amount += item.quantity * item.price
+  })
 
   return (
     <Layout location={location}>
@@ -89,7 +77,7 @@ const Cart = ({location}) => {
         removeFromCart={item => handleRemoveFromCart(item)}
       />
       {!loading && !completed && (
-        <CartSummary {...meta} handleCheckout={handleCheckout} />
+        <CartSummary amount={amount} handleCheckout={handleCheckout} />
       )}
     </Layout>
   )

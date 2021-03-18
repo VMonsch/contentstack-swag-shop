@@ -4,21 +4,19 @@ import {Button, Segment, Divider} from 'semantic-ui-react'
 
 export default ({
   handleCheckout,
-  display_price: {
-    with_tax: {amount, currency, formatted},
-  },
+  amount
 }) => (
   <div>
     <Divider />
     <Segment clearing size="large">
       <span>
         <strong>Sub total:</strong>
-        {` ${formatted}`}
+        {` ${amount}`} €
       </span>
       <StripeCheckout
-        name="Gatsby Store"
-        amount={amount}
-        currency={currency || 'GBP'}
+        name="Contentstack Swag Shop"
+        amount={amount * 100} //seems to be in cents
+        currency={'EUR'}
         stripeKey={process.env.STRIPE_PUBLISHABLE_KEY || ''}
         shippingAddress={false}
         billingAddress

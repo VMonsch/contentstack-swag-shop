@@ -5,7 +5,7 @@ import {Item, Label} from 'semantic-ui-react'
 
 import AddToCart from '../AddToCart'
 
-export default ({id, title, price, sku, image}) => (
+export default ({product}) => (
   <Item.Group>
     <Item style={{alignItems: 'center'}}>
       <Item.Image size="medium">
@@ -14,16 +14,16 @@ export default ({id, title, price, sku, image}) => (
           fluid={mainImage.childImageSharp.sizes}
           alt={name}
         />*/}
-        <img src={image.url} alt={title} />
+        <img src={product.image.url} alt={product.title} />
       </Item.Image>
       <Item.Content>
-        <Item.Header>{title}</Item.Header>
+        <Item.Header>{product.title}</Item.Header>
         <Item.Description>
-          <p>{price} €</p>
-          <Label>{`SKU: ${sku}`}</Label>
+          <p>{product.price} €</p>
+          <Label>{`SKU: ${product.sku}`}</Label>
         </Item.Description>
         <Item.Extra>
-          <AddToCart productId={id} />
+          <AddToCart product={product} />
         </Item.Extra>
       </Item.Content>
     </Item>
