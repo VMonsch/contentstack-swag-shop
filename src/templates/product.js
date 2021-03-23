@@ -22,14 +22,15 @@ class ProductPageTemplate extends React.PureComponent {
       header: data.name,
       meta: data.meta,
       sku: data.sku,
-      description: data.description
+      description: data.description,
+      seo: data.seo,
     }
 
     //if (!sizes) return null
 
     return (
       <Layout location={this.props.location}>
-        <SEO title={product.title} />
+        <SEO title={product.seo.title} description={product.seo.description}/>
         <ProductSummary product={product} />
         <ProductAttributes {...product} />
       </Layout>
