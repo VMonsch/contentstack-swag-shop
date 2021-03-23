@@ -30,6 +30,12 @@ const StoreIndex = ({location}) => {
           text {
             rich_text
           }
+          quote {
+            quote {
+              author
+              text
+            }
+          }
         }
       }
       allContentstackProduct {
@@ -56,11 +62,24 @@ const StoreIndex = ({location}) => {
     )
   }
 
+  function createQuote(text, author, idx) {
+    return (
+      <blockquote key={idx} className="quote">
+        <i className="quote right icon"></i>
+        <p className="text">{text}</p>
+        <p className="author">{author}</p>
+      </blockquote>
+    )
+  }
+
   function createProductList(title, idx) {
     return (
-      <div key={idx} style={{
-        margin: '2em',
-      }}>
+      <div
+        key={idx}
+        style={{
+          margin: '2em',
+        }}
+      >
         <Header
           as="h3"
           icon
@@ -84,10 +103,17 @@ const StoreIndex = ({location}) => {
   }
 
   function createBanner(url, idx) {
-    return <img src={url} alt="Banner" key={idx} style={{
-      width: '100%',
-      margin: '1em auto',
-    }}/>
+    return (
+      <img
+        src={url}
+        alt="Banner"
+        key={idx}
+        style={{
+          width: '100%',
+          margin: '1em auto',
+        }}
+      />
+    )
   }
 
   const siteTitle = get(data, 'site.siteMetadata.title')
@@ -107,6 +133,9 @@ const StoreIndex = ({location}) => {
           }
           if (data[0] === 'text' && data[1] !== null) {
             return createText(data[1].rich_text, idx)
+          }
+          if (data[0] === 'quote' && data[1] !== null) {
+            return createQuote(data[1].quote[0].text, data[1].quote[0].author, idx)
           }
         }),
       )}

@@ -1,0 +1,19 @@
+.quote {
+    background: #f0f0f0;
+    padding: 2em;
+    margin: 2em 0;
+    border-radius: 0.5em;
+}
+
+.quote .text {
+    font-weight: 600;
+}
+
+.quote .author {
+    font-style: italic;
+}
+
+.quote i.icon {
+    margin: 0 0 1em 0;
+    padding: 0;
+}
